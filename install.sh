@@ -261,7 +261,7 @@ sleep 1
 systemctl start bbb-livestream-worker@99
 
 # ── Inject API URL into BBB HTML ──────────────────────────────────────────────
-BBB_HTML="/var/www/bigbluebutton-default/index.html"
+BBB_HTML="/var/www/bigbluebutton-default/assets/index.html"
 if ! grep -q "BBB_LIVESTREAM_API_URL" "$BBB_HTML"; then
   sed -i "s|</head>|<script>window.BBB_LIVESTREAM_API_URL='https://${BBB_DOMAIN}:3020';</script>\n</head>|" "$BBB_HTML"
 fi
