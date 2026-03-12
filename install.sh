@@ -61,6 +61,15 @@ if ! id bbb-stream &>/dev/null; then
   info "Created user: bbb-stream"
 fi
 
+# ── Runtime directory for bbb-stream user (required by PulseAudio) ───────────
+BBB_STREAM_UID=$(id -u bbb-stream)
+mkdir -p /run/user/${BBB_STREAM_UID}
+chown bbb-stream:bbb-stream /run/user/${BBB_STREAM_UID}
+chmod 700 /run/user/${BBB_STREAM_UID}
+# Keep runtime dir alive across reboots and without active login session
+loginctl enable-linger bbb-stream
+info "Runtime directory created: /run/user/${BBB_STREAM_UID}"
+
 # ── Log directory ─────────────────────────────────────────────────────────────
 mkdir -p /var/log/bbb-livestream
 chown bbb-stream:bbb-stream /var/log/bbb-livestream
